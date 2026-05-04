@@ -196,6 +196,10 @@ function downloadCSVTemplate() {
   URL.revokeObjectURL(url);
 }
 
+function goToFIRE() {
+    window.location.href = "fire.html";
+}
+
 document.getElementById("monthFilter").addEventListener("change", scheduleRender);
 document.getElementById("typeFilter").addEventListener("change", scheduleRender);
 document.getElementById("searchBox").addEventListener("input", scheduleRender);
