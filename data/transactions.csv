@@ -1,0 +1,19 @@
+Date,Type,Category,VendorCustomer,Account,Amount,Notes
+2026-01-02,Income,Contract Revenue,Smith Remodel,Business Checking,12500.00,Kitchen remodel payment
+2026-01-05,Expense,Materials,Lowes,PLATINUM-27004,1845.77,Job materials
+2026-01-08,Expense,Fuel,QuikTrip,PLATINUM-27004,91.44,Truck fuel
+2026-01-13,Expense,Software,QuickBooks,Business Checking,65.00,Monthly subscription
+2026-01-18,Income,Rental Income,Oak Street Tenant,Business Checking,1800.00,Monthly rent
+2026-02-03,Expense,Subcontractors,ABC Electric,Business Checking,2200.00,Electrical labor
+2026-02-07,Expense,Insurance,NCFB Insurance,Business Checking,325.50,Policy payment
+2026-02-15,Income,Contract Revenue,Johnson Deck,Business Checking,8700.00,Deck project draw
+2026-02-20,Expense,Dump Fees & Waste,County Landfill,PLATINUM-27004,144.35,Disposal fees
+2026-03-01,Income,Rental Income,Oak Street Tenant,Business Checking,1800.00,Monthly rent
+2026-03-04,Expense,Equipment Rental,Sunbelt Rentals,PLATINUM-27004,640.00,Skid steer rental
+2026-03-12,Expense,Office/Admin,Staples,PLATINUM-27004,122.18,Office supplies
+2026-03-22,Income,Change Orders,Smith Remodel,Business Checking,2100.00,Change order approved
+2026-04-02,Expense,Repairs & Maintenance,NAPA Auto Parts,PLATINUM-27004,388.72,Truck parts
+2026-04-05,Expense,Professional Fees,CPA Firm,Business Checking,750.00,Tax planning
+2026-04-15,Income,Contract Revenue,Garage Build,Business Checking,15400.00,Project payment
+2026-04-20,Expense,Payroll,Payroll Provider,Business Checking,4200.00,Payroll run
+2026-04-25,Expense,Payroll Taxes,IRS EFTPS,Business Checking,1100.00,Payroll taxes
