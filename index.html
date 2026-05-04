@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Financial Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Financial Dashboard</h1>
+      <p>Track income, expenses, profit, categories, and recent transactions.</p>
+    </div>
+    <div class="actions">
+      <label class="upload-btn">
+        Upload CSV
+        <input type="file" id="csvUpload" accept=".csv" hidden />
+      </label>
+      <button id="resetData">Reset Sample Data</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="controls card">
+      <div>
+        <label for="monthFilter">Month</label>
+        <select id="monthFilter">
+          <option value="all">All Months</option>
+        </select>
+      </div>
+      <div>
+        <label for="typeFilter">Type</label>
+        <select id="typeFilter">
+          <option value="all">All Types</option>
+          <option value="Income">Income</option>
+          <option value="Expense">Expense</option>
+        </select>
+      </div>
+      <div>
+        <label for="searchBox">Search</label>
+        <input id="searchBox" type="search" placeholder="Vendor, category, account..." />
+      </div>
+    </section>
+
+    <section class="kpi-grid">
+      <article class="card kpi income">
+        <span>Total Income</span>
+        <strong id="totalIncome">$0</strong>
+      </article>
+      <article class="card kpi expense">
+        <span>Total Expenses</span>
+        <strong id="totalExpenses">$0</strong>
+      </article>
+      <article class="card kpi profit">
+        <span>Net Profit</span>
+        <strong id="netProfit">$0</strong>
+      </article>
+      <article class="card kpi margin">
+        <span>Profit Margin</span>
+        <strong id="profitMargin">0%</strong>
+      </article>
+    </section>
+
+    <section class="chart-grid">
+      <article class="card chart-card">
+        <h2>Income vs Expenses</h2>
+        <canvas id="incomeExpenseChart"></canvas>
+      </article>
+      <article class="card chart-card">
+        <h2>Expenses by Category</h2>
+        <canvas id="categoryChart"></canvas>
+      </article>
+      <article class="card chart-card full-width">
+        <h2>Monthly Net Profit</h2>
+        <canvas id="profitChart"></canvas>
+      </article>
+    </section>
+
+    <section class="card table-card">
+      <div class="table-header">
+        <h2>Transactions</h2>
+        <button id="downloadTemplate">Download CSV Template</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Category</th>
+              <th>Vendor / Customer</th>
+              <th>Account</th>
+              <th>Amount</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody id="transactionTable"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Static dashboard for GitHub Pages. Data stays in your browser unless you replace the CSV in the repo.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
