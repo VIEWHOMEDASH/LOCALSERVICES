@@ -90,17 +90,10 @@ select, input {
   gap: 18px;
   margin-bottom: 22px;
 }
-.chart-card { padding: 18px; min-height: 360px; }
-.chart-card canvas {
-  display: block;
-  width: 100% !important;
-  height: 300px !important;
-  max-height: 300px;
-}
-.chart-card.full-width canvas {
-  height: 320px !important;
-  max-height: 320px;
-}
+.chart-card { padding: 18px; min-height: 0; overflow: hidden; }
+.chart-box { position: relative; width: 100%; height: 300px; max-height: 300px; overflow: hidden; }
+.chart-card.full-width .chart-box { height: 320px; max-height: 320px; }
+.chart-box canvas { display: block !important; width: 100% !important; height: 100% !important; max-height: 100% !important; }
 .chart-card h2, .table-card h2 { margin: 0 0 14px; }
 .full-width { grid-column: 1 / -1; }
 

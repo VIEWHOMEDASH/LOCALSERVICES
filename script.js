@@ -1,6 +1,7 @@
 const DATA_URL = "data/transactions.csv";
 let transactions = [];
 let charts = {};
+let renderQueued = false;
 
 const currency = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
 
@@ -95,6 +96,25 @@ function populateMonthFilter() {
   select.value = months.includes(current) ? current : "all";
 }
 
+function scheduleRender() {
+  if (renderQueued) return;
+  renderQueued = true;
+  requestAnimationFrame(() => {
+    renderQueued = false;
+    renderDashboard();
+  });
+}
+
+function getChartCanvas(id) {
+  const canvas = document.getElementById(id);
+  const existing = Chart.getChart(canvas);
+  if (existing) existing.destroy();
+  canvas.removeAttribute("style");
+  canvas.width = canvas.parentElement.clientWidth;
+  canvas.height = canvas.parentElement.clientHeight;
+  return canvas;
+}
+
 function renderDashboard() {
   const data = getFilteredData();
   const income = sum(data, "Income");
@@ -112,14 +132,12 @@ function renderDashboard() {
 }
 
 function renderCharts(data) {
-  Object.values(charts).forEach(chart => {
-    if (chart) chart.destroy();
-  });
+  Object.values(charts).forEach(chart => chart && chart.destroy());
   charts = {};
   const monthly = groupByMonth(data);
   const categories = groupExpensesByCategory(data);
 
-  charts.incomeExpense = new Chart(document.getElementById("incomeExpenseChart").getContext("2d"), {
+  charts.incomeExpense = new Chart(getChartCanvas("incomeExpenseChart"), {
     type: "bar",
     data: {
       labels: monthly.map(item => item.month),
@@ -128,25 +146,25 @@ function renderCharts(data) {
         { label: "Expenses", data: monthly.map(item => item.expenses) }
       ]
     },
-    options: { responsive: true, maintainAspectRatio: false }
+    options: { responsive: false, maintainAspectRatio: false, animation: false }
   });
 
-  charts.category = new Chart(document.getElementById("categoryChart").getContext("2d"), {
+  charts.category = new Chart(getChartCanvas("categoryChart"), {
     type: "doughnut",
     data: {
       labels: categories.map(item => item[0]),
       datasets: [{ label: "Expenses", data: categories.map(item => item[1]) }]
     },
-    options: { responsive: true, maintainAspectRatio: false }
+    options: { responsive: false, maintainAspectRatio: false, animation: false }
   });
 
-  charts.profit = new Chart(document.getElementById("profitChart").getContext("2d"), {
+  charts.profit = new Chart(getChartCanvas("profitChart"), {
     type: "line",
     data: {
       labels: monthly.map(item => item.month),
       datasets: [{ label: "Net Profit", data: monthly.map(item => item.profit), tension: 0.35 }]
     },
-    options: { responsive: true, maintainAspectRatio: false }
+    options: { responsive: false, maintainAspectRatio: false, animation: false }
   });
 }
 
@@ -178,9 +196,9 @@ function downloadCSVTemplate() {
   URL.revokeObjectURL(url);
 }
 
-document.getElementById("monthFilter").addEventListener("change", renderDashboard);
-document.getElementById("typeFilter").addEventListener("change", renderDashboard);
-document.getElementById("searchBox").addEventListener("input", renderDashboard);
+document.getElementById("monthFilter").addEventListener("change", scheduleRender);
+document.getElementById("typeFilter").addEventListener("change", scheduleRender);
+document.getElementById("searchBox").addEventListener("input", scheduleRender);
 document.getElementById("resetData").addEventListener("click", loadSampleData);
 document.getElementById("downloadTemplate").addEventListener("click", downloadCSVTemplate);
 
@@ -195,5 +213,7 @@ document.getElementById("csvUpload").addEventListener("change", event => {
   };
   reader.readAsText(file);
 });
+
+window.addEventListener("resize", scheduleRender);
 
 loadSampleData();
