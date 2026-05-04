@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FIRE Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body {
+    font-family: Arial;
+    padding: 20px;
+    background: #f5f5f5;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.chart-container {
+    height: 300px;
+    position: relative;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🔥 Financial Independence, Retire Early</h1>
+
+<div class="card">
+    <h3>Retirement Calculator</h3>
+
+    <label>Current Savings:</label><br>
+    <input type="number" id="current" value="10000"><br><br>
+
+    <label>Monthly Contribution:</label><br>
+    <input type="number" id="monthly" value="500"><br><br>
+
+    <label>Annual Return (%):</label><br>
+    <input type="number" id="rate" value="7"><br><br>
+
+    <label>Years:</label><br>
+    <input type="number" id="years" value="25"><br><br>
+
+    <button onclick="calculateFIRE()">Calculate</button>
+</div>
+
+<div class="card chart-container">
+    <canvas id="fireChart"></canvas>
+</div>
+
+<script>
+let fireChart;
+
+function calculateFIRE() {
+    let current = parseFloat(document.getElementById('current').value);
+    let monthly = parseFloat(document.getElementById('monthly').value);
+    let rate = parseFloat(document.getElementById('rate').value) / 100;
+    let years = parseFloat(document.getElementById('years').value);
+
+    let months = years * 12;
+    let balance = current;
+
+    let labels = [];
+    let data = [];
+
+    for (let i = 0; i <= months; i++) {
+        balance = balance * (1 + rate / 12) + monthly;
+
+        if (i % 12 === 0) {
+            labels.push("Year " + (i / 12));
+            data.push(balance.toFixed(0));
+        }
+    }
+
+    // Prevent infinite canvas growth
+    if (fireChart) {
+        fireChart.destroy();
+    }
+
+    let ctx = document.getElementById('fireChart').getContext('2d');
+
+    fireChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Portfolio Growth',
+                data: data,
+                borderWidth: 2,
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+}
+</script>
+
+</body>
+</html>
