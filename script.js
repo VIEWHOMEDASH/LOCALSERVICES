@@ -112,11 +112,14 @@ function renderDashboard() {
 }
 
 function renderCharts(data) {
-  Object.values(charts).forEach(chart => chart.destroy());
+  Object.values(charts).forEach(chart => {
+    if (chart) chart.destroy();
+  });
+  charts = {};
   const monthly = groupByMonth(data);
   const categories = groupExpensesByCategory(data);
 
-  charts.incomeExpense = new Chart(document.getElementById("incomeExpenseChart"), {
+  charts.incomeExpense = new Chart(document.getElementById("incomeExpenseChart").getContext("2d"), {
     type: "bar",
     data: {
       labels: monthly.map(item => item.month),
@@ -128,7 +131,7 @@ function renderCharts(data) {
     options: { responsive: true, maintainAspectRatio: false }
   });
 
-  charts.category = new Chart(document.getElementById("categoryChart"), {
+  charts.category = new Chart(document.getElementById("categoryChart").getContext("2d"), {
     type: "doughnut",
     data: {
       labels: categories.map(item => item[0]),
@@ -137,7 +140,7 @@ function renderCharts(data) {
     options: { responsive: true, maintainAspectRatio: false }
   });
 
-  charts.profit = new Chart(document.getElementById("profitChart"), {
+  charts.profit = new Chart(document.getElementById("profitChart").getContext("2d"), {
     type: "line",
     data: {
       labels: monthly.map(item => item.month),
