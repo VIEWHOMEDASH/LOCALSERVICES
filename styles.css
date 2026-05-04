@@ -119,3 +119,17 @@ footer { padding: 20px; text-align: center; color: var(--muted); }
   .topbar { align-items: flex-start; flex-direction: column; }
   .controls, .kpi-grid, .chart-grid { grid-template-columns: 1fr; }
 }
+
+.fire-btn {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.fire-btn:hover {
+    background: #cc0000;
+}
